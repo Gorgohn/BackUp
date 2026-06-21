@@ -12,8 +12,23 @@ month = today.month
 target = backup_root / str(year) / str(month)
 
 if source_icloud.is_dir():
-    print("Quelle gefunden")
+    print("Source found")
+
     target.mkdir(parents=True, exist_ok=True)
     print(target)
+
+    test_path = source_icloud / "test.txt"
+
+
+    if test_path.is_file():
+        print("File found")
+
+        destination_file = target / test_path.name
+        print(destination_file)
+        
+        shutil.copy2(test_path, destination_file)
+        print("copied")
+    else:
+        print("File not found")
 else:
-    print("Quelle nicht gefunden")
+    print("source not found")
