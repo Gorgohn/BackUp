@@ -14,6 +14,7 @@ target = backup_root / str(year) / str(month)
 if source_icloud.is_dir():
     print("Source found")
 
+    copied_files = 0
     for doc in source_icloud.rglob("*"):
         if doc.is_file():
             relative_path = doc.relative_to(source_icloud)
@@ -22,5 +23,9 @@ if source_icloud.is_dir():
             print(destination_file)
             print(destination_file.parent)
             destination_file.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(doc, destination_file)
+            copied_files += 1
+    print(f"Backup finished. Copied files: {copied_files}")
+
 else:
-    print("source not found")
+    print("Source not found")
