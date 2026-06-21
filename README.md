@@ -1,12 +1,12 @@
-iCloud Backup automation:
+# iCloud Backup Automation
 
-This project helps to save, overwright and to compare your iCloud storage with a externel storage such as an hard drive. 
+This project helps back up iCloud files to an external storage device, such as a hard drive connected to a router. It creates monthly backup folders and copies new or changed files while skipping unchanged files.
 
-Why i built this:
+## Why I Built This
 
-I built this project to spent less time sorting my dataand have a faster transfer. i have much data on my iCloud and to look at everything is really time consuming. 
+I built this project to spend less time sorting and copying files manually. I have many files in iCloud, and checking everything by hand is time-consuming.
 
-Features:
+## Features
 
 - Creates monthly backup folders
 - Preserves folder structure
