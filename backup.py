@@ -19,13 +19,12 @@ if source_icloud.is_dir():
 
     test_path = source_icloud / "test.txt"
 
-
     if test_path.is_file():
         print("File found")
 
         destination_file = target / test_path.name
         print(destination_file)
-        
+
         shutil.copy2(test_path, destination_file)
         print("copied")
     else:
