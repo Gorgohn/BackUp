@@ -1,11 +1,11 @@
 import datetime 
+import pathlib
+import os
 
-source_icloud = "C:\Users\amd\iCloudDrive"
-
-backup_root = "E:\ "
+source_icloud = pathlib.Path(r"C:/Users/amd/iCloudDrive")
+backup_root = pathlib.Path(r"E:/")
 
 year = datetime.date.today().year
 month = datetime.date.today().month
 
-target = backup_root / year / month
-
+target = backup_root / str(year) / str(month)
