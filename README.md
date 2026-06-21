@@ -1,11 +1,16 @@
-This automation will take the data from icloud and saves it automatically on my external storage. 
+iCloud Backup automation:
 
-icloud data ----> External storage
+This project helps to save, overwright and to compare your iCloud storage with a externel storage such as an hard drive. 
 
-The programm will create a new folder on the external storage with a date when it is saving the data from icloud.
+Why i built this:
 
+I built this project to spent less time sorting my dataand have a faster transfer. i have much data on my iCloud and to look at everything is really time consuming. 
 
+Features:
 
-
-The date of the year and the month is getting importet from datetime and is set in the variable 'year' and 'month'.
-
+- Creates monthly backup folders
+- Preserves folder structure
+- Copies new files
+- Updates changed files
+- Skips unchanged files
+- Shows a backup summary
