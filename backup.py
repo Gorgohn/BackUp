@@ -2,7 +2,7 @@ import datetime
 import pathlib
 import shutil
 
-source_icloud = pathlib.Path(r"C:/Users/amd/iCloudDrive")
+source_icloud = pathlib.Path(r"D:/test_dir")
 backup_root = pathlib.Path(r"E:/")
 
 today = datetime.date.today()
@@ -13,6 +13,10 @@ target = backup_root / str(year) / str(month)
 
 if source_icloud.is_dir():
     print("Source found")
+
+    for doc in source_icloud.rglob("*"):
+        if doc.is_file():
+            print(doc)
 
     target.mkdir(parents=True, exist_ok=True)
     print(target)
