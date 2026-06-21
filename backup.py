@@ -11,6 +11,9 @@ month = today.month
 
 target = backup_root / str(year) / str(month)
 
-target.mkdir(parents=True, exist_ok=True)
-
-print(target)
+if source_icloud.exists():
+    print("Quelle gefunden")
+    target.mkdir(parents=True, exist_ok=True)
+    print(target)
+else:
+    print("Quelle nicht gefunden")
