@@ -8,7 +8,7 @@ backup_root = pathlib.Path(r"E:/")
 year = datetime.date.today().year
 month = datetime.date.today().month
 
-target = backup_root / str(year) / str(7)
+target = backup_root / str(year) / str(month)
 
 target.mkdir(parents=True, exist_ok=True)
 
