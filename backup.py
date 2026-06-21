@@ -16,22 +16,11 @@ if source_icloud.is_dir():
 
     for doc in source_icloud.rglob("*"):
         if doc.is_file():
-            print(doc)
-
-    target.mkdir(parents=True, exist_ok=True)
-    print(target)
-
-    test_path = source_icloud / "test.txt"
-
-    if test_path.is_file():
-        print("File found")
-
-        destination_file = target / test_path.name
-        print(destination_file)
-
-        shutil.copy2(test_path, destination_file)
-        print("copied")
-    else:
-        print("File not found")
+            relative_path = doc.relative_to(source_icloud)
+            destination_file = target / relative_path
+            print(relative_path)
+            print(destination_file)
+            print(destination_file.parent)
+            destination_file.parent.mkdir(parents=True, exist_ok=True)
 else:
     print("source not found")
