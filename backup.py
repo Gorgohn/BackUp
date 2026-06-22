@@ -23,31 +23,36 @@ if not backup_root.is_dir():
 print("Icloud found")
 print("Backup found")
 
-copied_files = 0
-skipped_files = 0
-updated_files = 0
+def run_backup():
+    copied_files = 0
+    skipped_files = 0
+    updated_files = 0
 
-for icloud_document in source_icloud.rglob("*"):
+    for new_file in source_icloud.rglob("*"):
 
-    if icloud_document.is_file():
-        relative_path = icloud_document.relative_to(source_icloud)
-        destination_file = target / relative_path
+        if new_file.is_file():
+            relative_path = new_file.relative_to(source_icloud)
+            destination_file = target / relative_path
 
-        destination_file.parent.mkdir(parents=True, exist_ok=True)
+            destination_file.parent.mkdir(parents=True, exist_ok=True)
 
-        if destination_file.exists():
-            icloud_file_time = icloud_document.stat().st_mtime
-            backup_file_time = destination_file.stat().st_mtime
+            if destination_file.exists():
+                icloud_file_time = new_file.stat().st_mtime
+                backup_file_time = destination_file.stat().st_mtime
 
-            if icloud_file_time > backup_file_time:
-                shutil.copy2(icloud_document, destination_file)
-                updated_files += 1
+                if icloud_file_time > backup_file_time:
+                    shutil.copy2(new_file, destination_file)
+                    updated_files += 1
+
+                else:
+                    skipped_files += 1
 
             else:
-                skipped_files += 1
+                shutil.copy2(new_file, destination_file)
+                copied_files += 1
 
-        else:
-            shutil.copy2(icloud_document, destination_file)
-            copied_files += 1
+    return copied_files, updated_files, skipped_files, new_file
+
+copied_files, updated_files, skipped_files = run_backup()
 
 print(f"Backup finished. Copied files: {copied_files}. Updated files: {updated_files}. Skipped files: {skipped_files}.")
