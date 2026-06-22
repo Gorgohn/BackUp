@@ -51,7 +51,7 @@ def run_backup():
                 shutil.copy2(new_file, destination_file)
                 copied_files += 1
 
-    return copied_files, updated_files, skipped_files, new_file
+    return copied_files, updated_files, skipped_files
 
 copied_files, updated_files, skipped_files = run_backup()
 
