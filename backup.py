@@ -3,22 +3,37 @@ import pathlib
 import shutil
 import sys
 
-source_icloud = pathlib.Path(r"D:/iCloudDrive")
-backup_root = pathlib.Path(r"E:/")
+def get_path():
+    source_icloud = pathlib.Path(r"D:/iCloudDrive")
+    backup_root = pathlib.Path(r"E:/")
+    return source_icloud, backup_root
 
-today = datetime.date.today()
-year = today.year
-month = today.month
+source_icloud, backup_root = get_path()
 
-target = backup_root / str(year) / str(month)
+def get_time():
+    today = datetime.date.today()
+    year = today.year
+    month = today.month
+    return today, year, month
 
-if not source_icloud.is_dir(): # searching for icloud
-    print("Icloud not found")
-    sys.exit(1)
+today, year, month = get_time()
 
-if not backup_root.is_dir(): # searching for backup
-    print("Backup not found")
-    sys.exit(1)
+def set_target():
+    target = backup_root / str(year) / str(month)
+    return target
+
+target = set_target()
+
+def check_is_dir():
+    if not source_icloud.is_dir(): # searching for icloud
+        print("Icloud not found")
+        sys.exit(1)
+
+    if not backup_root.is_dir(): # searching for backup
+        print("Backup not found")
+        sys.exit(1)
+
+check_is_dir()
 
 print("Icloud found")
 print("Backup found")
