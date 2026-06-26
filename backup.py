@@ -83,12 +83,11 @@ def run_backup(): # backup process
 copied_files, updated_files, skipped_files, failed_update_files, failed_copy_files = run_backup()
 
 def create_logging_file():
-    backup_log = logging_dir / f"Backup_log_{year}_{month}_{day}.txt"
-    log_file = open(backup_log, "w")
-    log_file.write(f"Backup finished.\nCopied files: {copied_files}.\nUpdated files: {updated_files}.\nSkipped files: {skipped_files}.\nFailed update files: {failed_update_files}.\nFailed copy files: {failed_copy_files}.\nDate: {year}.{month}.{day}")
-    log_file.close()
+    log_file_path = logging_dir / f"Backup_log_{year}_{month}_{day}.txt"
+    with open(log_file_path, "w") as log_file:
+        log_file.write(f"Backup finished.\nCopied files: {copied_files}.\nUpdated files: {updated_files}.\nSkipped files: {skipped_files}.\nFailed update files: {failed_update_files}.\nFailed copy files: {failed_copy_files}.\nDate: {year}.{month}.{day}")
     print("Backup log created")
 
-backup_log = create_logging_file()
+create_logging_file()
 
 print(f"Backup finished.\nCopied files: {copied_files}.\nUpdated files: {updated_files}.\nSkipped files: {skipped_files}.\nFailed update files: {failed_update_files}.\nFailed copy files: {failed_copy_files}.\nDate: {year}.{month}.{day}")
