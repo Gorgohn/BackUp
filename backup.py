@@ -84,11 +84,10 @@ copied_files, updated_files, skipped_files, failed_update_files, failed_copy_fil
 
 def create_logging_file():
     backup_log = logging_dir / f"Backup_log_{year}_{month}_{day}.txt"
-    backup_log = open(backup_log, "w")
-    backup_log.write(f"Backup finished.\nCopied files: {copied_files}.\nUpdated files: {updated_files}.\nSkipped files: {skipped_files}.\nFailed update files: {failed_update_files}.\nFailed copy files: {failed_copy_files}.\nDate: {year}.{month}.{day}")
-    backup_log.close
+    log_file = open(backup_log, "w")
+    log_file.write(f"Backup finished.\nCopied files: {copied_files}.\nUpdated files: {updated_files}.\nSkipped files: {skipped_files}.\nFailed update files: {failed_update_files}.\nFailed copy files: {failed_copy_files}.\nDate: {year}.{month}.{day}")
+    log_file.close()
     print("Backup log created")
-    return backup_log
 
 backup_log = create_logging_file()
 
