@@ -47,12 +47,17 @@ def check_is_dir():
 
 check_is_dir()
 
-def run_backup(): # backup process 
+def run_backup(): # backup process
     copied_files = 0
+    copied_files_list = []
+
     skipped_files = 0
+
     updated_files = 0
-    failed_update_files = 0
-    failed_copy_files = 0
+    updated_files_list = []
+
+    failed_update_files= 0
+    failed_copy_files= 0
 
     for new_file in source_icloud.rglob("*"): # getting all files
         if new_file.is_file(): # get path of icloud file and create path in backup
@@ -66,28 +71,31 @@ def run_backup(): # backup process
                     if icloud_file_time > backup_file_time: # if icloud file is newer than backup file, update the file
                         shutil.copy2(new_file, destination_file)
                         updated_files += 1
+                        updated_files_list.append(relative_path.name)
+
                     else: # if backup file is newest, count + 1 skipped file 
                         skipped_files += 1
                 except OSError:
                     failed_update_files += 1
-                    print(f"Error while updating file: {new_file}")
+                    #print(f"Error while updating file: {new_file}")
             else:
                 try: # if file is not in backup, copy to backup
                     shutil.copy2(new_file, destination_file)
                     copied_files += 1
+                    copied_files_list.append(relative_path.name)
                 except OSError:
                     failed_copy_files += 1
-                    print(f"Error while copying file: {new_file}")
-    return copied_files, updated_files, skipped_files, failed_update_files, failed_copy_files # returning values to global
+                    #print(f"Error while copying file: {new_file}")
+    return copied_files, copied_files_list, skipped_files, updated_files, updated_files_list, failed_update_files, failed_copy_files, new_file # returning values to global
 
-copied_files, updated_files, skipped_files, failed_update_files, failed_copy_files = run_backup()
+copied_files, copied_files_list, skipped_files, updated_files, updated_files_list, failed_update_files, failed_copy_files, new_file = run_backup()
 
 def create_logging_file():
     log_file_path = logging_dir / f"Backup_log_{year}_{month}_{day}.txt"
     with open(log_file_path, "w") as log_file:
-        log_file.write(f"Backup finished.\nCopied files: {copied_files}.\nUpdated files: {updated_files}.\nSkipped files: {skipped_files}.\nFailed update files: {failed_update_files}.\nFailed copy files: {failed_copy_files}.\nDate: {year}.{month}.{day}")
+        log_file.write(f"Backup finished.\n\n\nCopied files: {copied_files}\n{copied_files_list}.\n\nUpdated files: {updated_files}\n{updated_files_list}.\n\nSkipped files: {skipped_files}.\n\nFailed update files: {failed_update_files}.\n\nFailed copy files: {failed_copy_files}.\n\nDate: {year}.{month}.{day}")
     print("Backup log created")
 
 create_logging_file()
 
-print(f"Backup finished.\nCopied files: {copied_files}.\nUpdated files: {updated_files}.\nSkipped files: {skipped_files}.\nFailed update files: {failed_update_files}.\nFailed copy files: {failed_copy_files}.\nDate: {year}.{month}.{day}")
+print(f"Backup finished.\nCopied files: {copied_files}\n{copied_files_list}.\nUpdated files: {updated_files}\n{updated_files_list}.\nSkipped files: {skipped_files}.\nFailed update files: {failed_update_files}.\nFailed copy files: {failed_copy_files}.\nDate: {year}.{month}.{day}")
