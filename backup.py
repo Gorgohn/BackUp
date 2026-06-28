@@ -34,13 +34,13 @@ def set_logging_dir():
 logging_dir = set_logging_dir()
 
 def check_is_dir():
-    if not source_icloud.is_dir(): # searching for icloud
+    if not source_icloud.is_dir():
         print("Icloud not found\n")
         sys.exit(1)
     else:
         print("Icloud found\n")
 
-    if not backup_root.is_dir(): # searching for backup
+    if not backup_root.is_dir():
         print("Backup not found\n")
         sys.exit(1)
     else:
@@ -48,7 +48,7 @@ def check_is_dir():
 
 check_is_dir()
 
-def run_backup(): # backup process
+def run_backup():
     copied_files = 0
     copied_files_list = []
 
@@ -60,33 +60,31 @@ def run_backup(): # backup process
     failed_update_files= 0
     failed_copy_files= 0
 
-    for new_file in source_icloud.rglob("*"): # getting all files
-        if new_file.is_file(): # get path of icloud file and create path in backup
+    for new_file in source_icloud.rglob("*"):
+        if new_file.is_file():
             relative_path = new_file.relative_to(source_icloud)
             destination_file = target / relative_path
             destination_file.parent.mkdir(parents=True, exist_ok=True)
-            if destination_file.exists(): # setting timestamp for existing files in the backup
+            if destination_file.exists():
                 icloud_file_time = new_file.stat().st_mtime
                 backup_file_time = destination_file.stat().st_mtime
                 try:
-                    if icloud_file_time > backup_file_time: # if icloud file is newer than backup file, update the file
+                    if icloud_file_time > backup_file_time:
                         shutil.copy2(new_file, destination_file)
                         updated_files += 1
                         updated_files_list.append(relative_path.name)
-                    else: # if backup file is newest, count + 1 skipped file 
+                    else:
                         skipped_files += 1
                 except OSError:
                     failed_update_files += 1
-                    #print(f"Error while updating file: {new_file}")
             else:
-                try: # if file is not in backup, copy to backup
+                try:
                     shutil.copy2(new_file, destination_file)
                     copied_files += 1
                     copied_files_list.append(relative_path.name)
                 except OSError:
                     failed_copy_files += 1
-                    #print(f"Error while copying file: {new_file}")
-    return copied_files, copied_files_list, skipped_files, updated_files, updated_files_list, failed_update_files, failed_copy_files, new_file # returning values to global
+    return copied_files, copied_files_list, skipped_files, updated_files, updated_files_list, failed_update_files, failed_copy_files, new_file
 
 copied_files, copied_files_list, skipped_files, updated_files, updated_files_list, failed_update_files, failed_copy_files, new_file = run_backup()
 
