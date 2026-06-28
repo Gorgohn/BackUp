@@ -61,8 +61,12 @@ def run_backup():
     failed_copy_files= 0
 
     for new_file in source_icloud.rglob("*"):
+        relative_path = new_file.relative_to(source_icloud)
+
+        if any(part.lower() == ".trash" for part in relative_path.parts):
+            continue
+
         if new_file.is_file():
-            relative_path = new_file.relative_to(source_icloud)
             destination_file = target / relative_path
             destination_file.parent.mkdir(parents=True, exist_ok=True)
             if destination_file.exists():
