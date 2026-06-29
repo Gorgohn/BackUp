@@ -59,11 +59,12 @@ def run_backup():
 
     failed_update_files= 0
     failed_copy_files= 0
+    excluded_path_parts = {".trash", "icloud~is~workflow~my~workflows"}
 
     for new_file in source_icloud.rglob("*"):
         relative_path = new_file.relative_to(source_icloud)
 
-        if any(part.lower() == ".trash" for part in relative_path.parts):
+        if any(part.lower() in excluded_path_parts for part in relative_path.parts):
             continue
 
         if new_file.is_file():
