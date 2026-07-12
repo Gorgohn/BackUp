@@ -4,7 +4,7 @@ import shutil
 import sys
 
 def get_path():
-    source_root = pathlib.Path(r"D:/Icloud/iCloudDrive") # Need to be changed into the source path
+    source_root = pathlib.Path(r"D:/") # Need to be changed into the source path
     backup_root = pathlib.Path(r"E:/") # Need to be changed into the target path
     return source_root, backup_root
 
@@ -19,11 +19,11 @@ def get_time():
 today, year, month, day, current_time = get_time()
 
 def set_target(backup_root):
-    target = backup_root / str(year) / str(month) / f"full {day}_{month}_{year}"
+    target = backup_root / str(year) / str(month) / f"full {day}_{month}_{year}" # Backup directory name changeable e.g. backup_root / "full_backup" / ... or backup_root / "full_backup_2024_06_15" / ...
     return target
 
 def set_logging_dir(backup_root):
-    logging_dir = backup_root / "Logging data"
+    logging_dir = backup_root / "Logging data" # Backup directory name changeable e.g. backup_root / "Loggings" / ... or backup_root / "Logging data_2024_06_15" / ...
     logging_dir.mkdir(parents=True, exist_ok=True)
     return logging_dir
 
@@ -42,7 +42,7 @@ def check_is_dir(source_root, backup_root):
 
 def create_logging_file(backup_root, copied_files, copied_files_list, failed_copy_files):
     logging_dir = set_logging_dir(backup_root)
-    log_file_path = logging_dir / f"Backup_log_{year}_{month}_{day}.txt"
+    log_file_path = logging_dir / f"Backup_log_{year}_{month}_{day}.txt" # Backup log file name changeable e.g. logging_dir / "Backup_log.txt" / ... or logging_dir / "Backup_log_2024_06_15.txt" / ...
     with open(log_file_path, "w") as log_file:
         log_file.write(f"Full Backup finished.\n\n\nCopied files: {copied_files}\n{copied_files_list}.\n\nFailed copy files: {failed_copy_files}.\n\nDate: {current_time.strftime("%x")} {current_time.strftime("%X")}")
     print("Backup log created\n")
@@ -56,7 +56,7 @@ def run_full_backup():
     copied_files_list = []
 
     failed_copy_files= 0
-    excluded_path_parts = {".trash", "icloud~is~workflow~my~workflows"}
+    excluded_path_parts = {} # Add the excluded path parts here, e.g. {"excluded_folder", "excluded_file.txt"}
 
     check_is_dir(source_root, backup_root)
 
@@ -83,4 +83,3 @@ def run_full_backup():
 copied_files, copied_files_list, failed_copy_files, new_file = run_full_backup()
 
 print(f"Full Backup finished.\n\n\nCopied files: {copied_files}\n{copied_files_list}.\n\nFailed copy files: {failed_copy_files}.\n\nDate: {current_time.strftime("%x")} {current_time.strftime("%X")}")
-# need to commit
