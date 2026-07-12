@@ -4,8 +4,16 @@ import shutil
 import sys
 
 def get_path():
+    # Use this block to set the source and backup paths directly in the code
     source_root = pathlib.Path(r"D:/") # Need to be changed into the source path
     backup_root = pathlib.Path(r"E:/") # Need to be changed into the target path
+
+    # Use this block to get the source and backup paths from user input
+    # source = input("Enter the source path: ").strip().strip('"').replace("\\", "/")
+    # source_root = pathlib.Path(source) # Path to the source directory, e.g. D:/path/to/source
+    # backup = input("Enter the backup path: ").strip().strip('"').replace("\\", "/")
+    # backup_root = pathlib.Path(backup) # Path to the backup directory, e.g. E:/path/to/backup
+
     return source_root, backup_root
 
 def get_time():
